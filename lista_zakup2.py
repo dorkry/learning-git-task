@@ -12,4 +12,7 @@ for shop in shopping.keys():
     print("Idę do ",shop.capitalize(), "i kupuję ",products)
     number=number+len(shopping[shop])
 #the end-second commit
+#greetings
+print("Greetings for Trinidad and Tobago!")
+
     
