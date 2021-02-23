@@ -4,6 +4,7 @@ shopping={
     "Warzywniak":["marchew", "seler", "rukola"]
     }
 number=0
+#new comment to commit to Git
 for shop in shopping.keys():
     products=""
     for i in shopping[shop]:
