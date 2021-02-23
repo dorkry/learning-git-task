@@ -11,4 +11,5 @@ for shop in shopping.keys():
         products=products  + i.capitalize()+","
     print("Idę do ",shop.capitalize(), "i kupuję ",products)
     number=number+len(shopping[shop])
+#the end-second commit
     
