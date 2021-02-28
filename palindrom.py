@@ -8,3 +8,12 @@ def palindrom(text):
         else:
             return False
     return True
+
+
+#sprawdzenie działania funkcji
+to_check=['ada', 'kajak', 'pies', 'zakaz', 'abccba', 'drzewo', 'radar', 'abba', 'oko', 'dziecko']
+for word in (to_check):
+    if(palindrom(word)):
+        print(word, " jest palindromem")
+    else:
+        print(word, " nie jest palindromem")
