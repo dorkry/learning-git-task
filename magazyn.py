@@ -42,9 +42,9 @@ def get_items(shop_list):
 def add(shop_list):
     print("Adding to warehouse...")
     new_name = input("Item name: ")
-    new_quantity = input("Item quantity: ")
+    new_quantity = float(input("Item quantity: "))
     new_unit = input("Item unit: ")
-    new_price = input("Item price: ")
+    new_price = float(input("Item price: "))
     new_item = {
         "name": new_name,
         "quantity": new_quantity,
@@ -53,11 +53,22 @@ def add(shop_list):
     }
     shop_list.append(new_item)
     return shop_list
-    
+
+def sell_items(shop_list):
+    sell_name = input("Item name: ")
+    sell_quantity = float(input("Quantity to sell: "))
+    for sell_items in shop_list:
+        if sell_items["name"] == sell_name:
+            sell_items["quantity"] -= sell_quantity
+            break
+    get_items(shop_list)
+    return shop_list       
+
 menu = {
  "exit": close,
  "show": get_items,
- "add": add
+ "add": add,
+ "sell": sell_items
 }
 
 if __name__ == "__main__":
