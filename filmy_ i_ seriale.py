@@ -12,6 +12,9 @@ class Movie:
     
     def __str__(self):
         return f'{self.title} ({self.year})'
+    
+    def __repr__(self):
+        return str(self)
 
 class Series(Movie):
     def __init__(self, episode, season, *args, **kwargs):
@@ -20,15 +23,33 @@ class Series(Movie):
         self.season = season
 
     def __str__(self):
-        return f'{self.title} S{self.season}E{self.episode}'
-
-library = []
-library.append(Movie("Shrek", "2001", "animated"))
-library.append(Movie("Skyfall", "2012", "action"))
-library.append(Series("01","02", "The Crown", "2016", "history"))
-print(library[0])
-print(library[2])
-
+        return f'{self.title} S{self.season:02}E{self.episode:02}'
     
+def get_movies(m):
+    movie_list = []
+    for i in m:
+        if not isinstance(i, Series):
+            movie_list.append(i)
+    return movie_list
+    
+def get_series(s):
+    series_list = []
+    for i in s:
+        if isinstance(i, Series):
+            series_list.append(i)
+    return series_list
+
+library = [
+Movie("Shrek", "2001", "animated"),
+Movie("Skyfall", "2012", "action"),
+Series(1, 2, "The Crown", "2016", "history"),
+Series(11,4, "The Crown", "2020", "history")
+]
+
+print(library[0])
+print(library[3])
+print(get_movies(library))
+print(get_series(library))
+  
 
     

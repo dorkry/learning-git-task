@@ -19,7 +19,7 @@ class Card:
         print(f"Kontaktuję się z {self.name} {self.surname},{self.position_in_company},{self.email}")
         return
 
-# dekorator- tu coś nie działa tak jak powinno :)
+# dekorator
     @property
     def label_lenght(self):
         return len(self.name) + len(self.surname) + 1        
