@@ -27,25 +27,16 @@ class Series(Movie):
     def __str__(self):
         return f'{self.title} S{self.season:02}E{self.episode:02}'
     
-def get_movies(m):
-    movie_list = []
-    for i in m:
-        if not isinstance(i, Series):
-            movie_list.append(i)
+def get_movies(mov):
+    movie_list = [i for i in mov if not isinstance(i, Series)]
     return movie_list
     
-def get_series(s):
-    series_list = []
-    for i in s:
-        if isinstance(i, Series):
-            series_list.append(i)
+def get_series(ser):
+    series_list = [i for i in ser if isinstance (i, Series)]
     return series_list
 
-def search(l, title):
-    title_list = []
-    for i in l:
-        if i.title == title:
-            title_list.append(i)
+def search(lis2, title):
+    title_list = [i for i in lis2 if i.title == title]
     return title_list
 
 def generate_views(library):
@@ -59,26 +50,26 @@ def generate10(library):
         print("|")
     return library
     
-def top_title(library, number):
+def top_titles(library, number):
     library = sorted(library, key = lambda x: x.views, reverse=True)
     return library[:number]
 
-library = [
-Movie("Shrek", "2001", "animated"),
-Movie("Skyfall", "2012", "action"),
-Series(1, 2, "The Crown", "2016", "history"),
-Series(11,4, "The Crown", "2020", "history")
+lib = [
+    Movie("Shrek", "2001", "animated"),
+    Movie("Skyfall", "2012", "action"),
+    Series(1, 2, "The Crown", "2016", "history"),
+    Series(11,4, "The Crown", "2020", "history")
 ]
 
 #sprawdzam
-print(library[0])
-print(library[3])
-print(get_movies(library))
-print(get_series(library))
-print(search(library, "The Crown"))
-library = generate10(library)  
-for i in library:
+print(lib[0])
+print(lib[3])
+print(get_movies(lib))
+print(get_series(lib))
+print(search(lib, "The Crown")) #ten search zwraca liste wszystkich pasujacych tytulow a nie tylko jeden element
+lib = generate10(lib)  
+for i in lib:
     print(f'{i.title} {i.views}')
-print(top_title(library, 3))
+print(top_titles(lib, 3))
 
     
