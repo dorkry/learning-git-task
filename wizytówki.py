@@ -1,54 +1,77 @@
 # wizytówki
-class Card:
-    def __init__(self, name, surname, company_name, position_in_company, email):
+from faker import Faker
+
+class BaseContact:
+    def __init__(self, name, surname, email, phone):
         self.name = name
         self.surname = surname
-        self.company_name = company_name
-        self.position_in_company = position_in_company
         self.email = email
-        
-        self.lenght = len(self.name) + len(self.surname) + 1
-
-
-# print obiect
+        self.phone = phone
+                
+    # print obiect
     def __str__(self):
         return f'{self.name}, {self.surname}, {self.email}'
+
+    def __repr__(self):
+        return str(self)
    
-# contact
+    # contact
     def contact(self):
-        print(f"Kontaktuję się z {self.name} {self.surname},{self.position_in_company},{self.email}")
+        print(f"Kontaktuję się z {self.name} {self.surname},{self.email}")
         return
 
-# dekorator
+    # dekorator
     @property
     def label_lenght(self):
         return len(self.name) + len(self.surname) + 1        
-
-# dziedziczenie:
-class BaseContact(Card):
-    def __init__(self, phone, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.phone = phone
 
     def contact(self):
         print(f"Wybieram numer {self.phone} i dzwonię do {self.name} {self.surname}")
         return
 
-class BusinessContact(Card):
-    def __init__(self, business_phone, *args, **kwargs):
+class BusinessContact(BaseContact):
+    def __init__(self, business_phone, company_name, position_in_company, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.business_phone = business_phone
-
+        self.company_name = company_name
+        self.position_in_company = position_in_company
+        
     def contact(self):
         print(f"Wybieram numer {self.business_phone} i dzwonię do {self.name} {self.surname}")
         return
 
-contacts = []
-contacts.append(Card("Andrzej","Nowak", "MI6", "CEO", "andrzej.nowak@mi6.com"))
-contacts.append(Card("Kordian", "Zordon", "Ż&M", "tester", "kordzord@zm.com"))
-contacts.append(Card("Sewryn", "Burza", "Medical Comp.", "product manager", "s.burza@o2.pl"))
-contacts.append(Card("Joanna", "Nowak", "KKM", "secretary", "nowakj.kkm@gmail.com"))
-contacts.append(Card("Katarzyna", "Kowalska", "Health and Life", "prodact owner", "kk.hal@wp.pl"))
+def create_contacts(type, number):
+    contact_list = []
+    fake = Faker()
+    if type == "Base":
+        for i in range(number):
+           name = fake.first_name()
+           surname = fake.last_name()
+           mail = fake.email()
+           phone = fake.phone_number()           
+           contact_list.append(BaseContact(name, surname, mail, phone))
+
+    elif type == "Business":
+        for i in range(number):
+           name = fake.first_name()
+           surname = fake.last_name()
+           mail = fake.email()
+           phone = fake.phone_number()
+           phone2 = fake.phone_number()
+           company = fake.company()
+           job = fake.job()
+           contact_list.append(BusinessContact(phone2, company, job, name, surname, mail, phone))
+
+    return contact_list
+
+#test
+contacts = [
+    BaseContact("Andrzej","Nowak", "andrzej.nowak@mi6.com", "11223344"),
+    BaseContact("Kordian", "Zordon", "kordzord@zm.com", "22334455"),
+    BaseContact("Sewryn", "Burza", "s.burza@o2.pl", "33445566"),
+    BaseContact("Joanna", "Nowak", "nowakj.kkm@gmail.com", "44556677"),
+    BaseContact("Katarzyna", "Kowalska", "kk.hal@wp.pl", "55667788")
+]
 
 for person in contacts:
     print(person.name, person.surname, person.email)
@@ -67,9 +90,9 @@ for i in by_surname:
 for i in by_email:
     print(i)
 
-base =  BaseContact("1122334455", "Andrzej","Nowak", "MI6", "CEO", "andrzej.nowak@mi6.com")
-base.contact()
-print(base.label_lenght)
-
-business = BusinessContact("2233445566","Andrzej","Nowak", "MI6", "CEO", "andrzej.nowak@mi6.com")
+business = BusinessContact("2233445566","MI6", "CEO", "Andrzej","Nowak", "andrzej.nowak@mi6.com", "11223344")
 business.contact()
+
+print(create_contacts("Base", 5))
+
+print(create_contacts("Business", 3))
